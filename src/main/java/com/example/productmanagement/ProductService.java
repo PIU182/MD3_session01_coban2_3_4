@@ -9,14 +9,35 @@ import java.util.UUID;
 
 @Service
 public class ProductService {
-    List<Product> products = Arrays.asList(
-            new Product(UUID.randomUUID().toString(), "Sua chua", 15000),
-            new Product(UUID.randomUUID().toString(), "Bim Bim", 20000),
-            new Product(UUID.randomUUID().toString(), "My tom", 10000)
+    private List<Product> products = new ArrayList<>(
+            List.of(
+                    new Product(1, "Sua chua", 15000),
+                    new Product(2, "Bim Bim", 20000),
+                    new Product(3, "My tom", 10000)
+            )
     );
 
     public List<Product> getAllProducts() {
         return products;
+    }
+
+    public void addProduct(Product product) {
+        products.add(product);
+    }
+
+    public boolean updateProduct(int id, Product product) {
+        for (Product p : products) {
+            if (p.getId() == id) {
+                p.setName(product.getName());
+                p.setPrice(product.getPrice());
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean deleteProduct(int id) {
+        return products.removeIf(p -> p.getId() == id);
     }
 
 }
